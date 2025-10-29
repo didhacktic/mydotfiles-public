@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# stow-link-both.sh — Liaison fichier-par-fichier public+private
+# Usage: ./stow-link-both.sh [--dry-run] [--force] [--filter <mot>]
+set -euo pipefail
+
+PUBLIC_BASE="$HOME/didhacktic/mydotfiles-public/Arch-Hyprland"
+PRIVATE_BASE="$HOME/didhacktic/mydotfiles-private/Arch-Hyprland"
+TARGET_DIR="$HOME"
+
+DRY_RUN=false
+FORCE=false
+FILTER=""
+
+# Options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --dry-run) DRY_RUN=true; shift ;;
+    --force) FORCE=true; shift ;;
+    --filter) FILTER="$2"; shift 2 ;;
+    -h|--help)
+      cat <<EOF
+Usage: $0 [--dry-run] [--force] [--filter <mot>]
+
+Options:
+  --dry-run      Simule les actions (ne crée aucun lien)
+  --force        Si la cible existe, la sauvegarde en .bak avant remplacement
+  --filter <mot> Ne traiter que les fichiers dont le chemin relatif contient <mot>
+EOF
+      exit 0
+      ;;
+    *) echo "Option inconnue: $1"; exit 1 ;;
+  esac
+done
+
+log() { printf '%s\n' "$*"; }
+
+# fonction qui crée un lien pour un fichier source donné
+link_file() {
+  local src="$1" dest="$2"
+
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    # existe déjà : si c'est déjà le bon lien, on skip
+    if [ -L "$dest" ] && [ "$(readlink -f "$dest")" = "$(readlink -f "$src")" ]; then
+      log "   -> cible déjà correcte : $dest"
+      return
+    fi
+
+    if [ "$FORCE" = true ]; then
+      # sauvegarde
+      local bak="${dest}.bak.$(date +%s)"
+      if [ "$DRY_RUN" = true ]; then
+        log "   🧪 Simulation : mv \"$dest\" \"$bak\""
+      else
+        mkdir -p "$(dirname "$bak")"
+        mv "$dest" "$bak"
+        log "   ⚠️  Sauvegardé $dest -> $bak"
+      fi
+    else
+      log "   ⚠️  Cible existe (utiliser --force pour sauvegarder) : $dest"
+      return
+    fi
+  fi
+
+  # crée dossier parent et le lien
+  if [ "$DRY_RUN" = true ]; then
+    log "   🧪 Simulation : mkdir -p \"$(dirname "$dest")\""
+    log "   🧪 Simulation : ln -s \"$src\" \"$dest\""
+  else
+    mkdir -p "$(dirname "$dest")"
+    ln -s "$src" "$dest"
+    log "   ✅ Lien créé : $dest -> $src"
+  fi
+}
+
+# fonction pour traiter une base (public/private)
+process_base() {
+  local base="$1"
+  local label="$2"
+  if [ ! -d "$base" ]; then
+    log "ℹ️  [$label] non trouvé : $base — saut."
+    return
+  fi
+
+  log "🔍 [$label] Parcours de : $base"
+  # trouver tous les fichiers, trier pour stabilité
+  while IFS= read -r -d $'\0' file; do
+    # chemin relatif
+    rel="${file#$base/}"
+    # filtre optionnel
+    if [ -n "$FILTER" ] && [[ "$rel" != *"$FILTER"* ]]; then
+      continue
+    fi
+    dest="$TARGET_DIR/$rel"
+
+    log "-> [$label] $rel"
+    link_file "$file" "$dest"
+  done < <(find "$base" -type f -print0 | sort -z)
+  echo
+}
+
+# ordre : public puis private (private écrase)
+process_base "$PUBLIC_BASE" "public"
+process_base "$PRIVATE_BASE" "private"
+
+if [ "$DRY_RUN" = true ]; then
+  log "✅ Simulation terminée."
+else
+  log "🎉 Opérations terminées."
+fi
