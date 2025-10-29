@@ -1,0 +1,41 @@
+
+#!/bin/bash
+
+
+OUTPUT="DVI-I-1"   # LVDS-1 on some displays!
+                 # Run xrandr to find out.
+INCR=.05
+dim=.85
+dimmer=.80
+dimmest=.75
+bright=1
+
+old_brightness=$(xrandr --verbose | grep rightness | awk '{ print $2 }')
+### echo $old_brightness
+
+
+if [ -z "$1" ]
+then
+  bright=1
+
+  else
+    if [ "$1" = "+" ]
+    then
+      bright=$(echo "scale=1; $old_brightness + $INCR" | bc)
+
+  else
+    if [ "$1" = "-" ]
+    then
+      bright=$(echo "scale=1; $old_brightness - $INCR" | bc)
+
+  else
+    bright="$1"  # Usable range from about .7 to maybe 1.2 ...
+
+    fi
+
+  fi
+fi
+
+
+echo "New brightness = $bright"
+xrandr --output "$OUTPUT" --brightness "$bright"

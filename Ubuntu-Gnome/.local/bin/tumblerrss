@@ -1,0 +1,4 @@
+#!/bin/bash
+#sleep 8 && conky -c ~/.conky/Bonjourmadame/bonjourmadamerc
+nohup conky -c ~/.conky/TumblerRss/tumblerrssrc &>/dev/null
+

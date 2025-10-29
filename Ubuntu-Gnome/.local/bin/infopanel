@@ -1,0 +1,3 @@
+#!/bin/bash
+nohup conky -c ~/.conky/InfoPanel/infopanelrcV &>/dev/null 
+
