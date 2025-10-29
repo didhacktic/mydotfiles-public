@@ -1,0 +1,130 @@
+# Generated with Conky Wizard
+# Copyright (C) 2010 JoséDavid Abad Garcia
+# GPL Version 3
+# 
+# WARNING! All changes made in this file will be lost if the program runs again!
+
+# set to yes if you want Conky to be forked in the background
+background yes
+
+# Default Fonts
+use_xft yes
+xftfont Ubuntu:size=12
+override_utf8_locale yes
+#xftalpha 0.84
+
+# Performance Settings
+update_interval 1
+total_run_times 0
+double_buffer yes
+no_buffers yes
+net_avg_samples 2
+text_buffer_size 1024
+
+# Window Settings
+own_window yes
+#own_window_transparent yes
+#draw_blended false
+own_window_argb_visual yes
+own_window_argb_value 100
+own_window_type desktop #dock override normal conky panel
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+
+# Window border
+draw_borders no
+draw_shades no
+draw_graph_borders no
+
+# Default Color
+default_color E0DFDE
+
+# Color Title.
+color0 FFFFFF #blanc
+color1 6E6D6D #gris foncé
+color2 FF0000 #rouge
+color3 DD3A21 #orange ubuntu
+
+# Size and position
+minimum_size 330 1416
+#minimum_size 330 1404
+gap_x -1
+gap_y 28
+#gap_y 36
+
+alignment top_right
+
+TEXT
+#${image ~/.conky/InfoPanel/backgroundV2.png -p 0,-24 -s 330x1440}
+${image ~/.conky/InfoPanel/backgroundV4.png -p -21,0 -s 355x1416}
+
+
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Système${font}${color}
+
+${GOTO 50}Kernel :${GOTO 165}${kernel}
+${GOTO 50}CPU :${GOTO 165}${cpubar cpu1 10,75} ${cpu cpu1} %
+${GOTO 50}RAM :${GOTO 165}${membar 10,75} ${memperc} %
+${GOTO 50}SWAP :${GOTO 165}${swapbar 10,75}
+${GOTO 50}Uptime :${GOTO 165}${uptime}
+
+
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Réseau${font}${color}
+${GOTO 50}${if_existing /proc/net/route wlo1}${font Ubuntu:bold:size=10}${color1}Wifi${font}${color}${else}${if_existing /proc/net/route enp88s0}${font Ubuntu:bold:size=10}${color1}Ethernet${font}${color}${else}${font Ubuntu:bold:size=10}${color2}Déconnecté${font}${color}${endif}${endif}
+${GOTO 50}Upspeed :${GOTO 165}${if_existing /proc/net/route wlo1}${upspeedgraph wlo1 10,75 B7B2AD B7B2AD}${GOTO 260}${upspeed wlo1}${else}${if_existing /proc/net/route enp88s0}${upspeedgraph enp88s0 10,75 B7B2AD B7B2AD}${GOTO 260}${upspeed enp88s0}${endif}${endif}
+${GOTO 50}Downspeed :${GOTO 165}${if_existing /proc/net/route wlo1}${downspeedgraph wlo1 10,75 B7B2AD B7B2AD}${GOTO 260}${downspeed wlo1}${else}${if_existing /proc/net/route enp88s0}${downspeedgraph enp88s0 10,75 B7B2AD B7B2AD}${GOTO 260}${downspeed enp88s0}${endif}${endif}
+${GOTO 50}Uploaded :${GOTO 165}${if_existing /proc/net/route wlo1}${totalup wlo1}${else}${if_existing /proc/net/route enp88s0}${totalup enp88s0}${endif}${endif}
+${GOTO 50}Downloaded :${GOTO 165}${if_existing /proc/net/route wlo1}${totaldown wlo1}${else}${if_existing /proc/net/route enp88s0}${totaldown enp88s0}${endif}${endif}
+${GOTO 50}Local IP :${GOTO 165}${if_existing /proc/net/route wlo1}${addr wlo1}${else}${if_existing /proc/net/route enp88s0}${addr enp88s0}${endif}${endif}
+${GOTO 50}Public IP :${GOTO 165}${execi 4 ~/.conky/InfoPanel/ip.sh}
+
+
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Disques${font}${color}
+
+#${GOTO 50}System (/) :${GOTO 165}${fs_free /}
+${GOTO 50}System :${GOTO 165}${fs_used /} / ${fs_size /}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /}
+${GOTO 50}Musique :${GOTO 165}${fs_used /media/Musique} / ${fs_size /media/Musique}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Musique}
+${GOTO 50}DS215+ :${GOTO 165}${fs_used /media/DS215} / ${fs_size /media/DS215}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/DS215}
+${GOTO 50}DS418 :${GOTO 165}${fs_used /media/DS418} / ${fs_size /media/DS418}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/DS418}
+
+
+
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Températures${font}${color}
+
+${GOTO 50}Core 0 :${GOTO 165}${execi 4 sensors | grep -A 0 'Core 0' | cut -c15-23}
+${GOTO 50}Core 1 :${GOTO 165}${execi 4 sensors | grep -A 0 'Core 1' | cut -c15-23}
+${GOTO 50}Core 2 :${GOTO 165}${execi 4 sensors | grep -A 0 'Core 2' | cut -c15-23}
+${GOTO 50}Core 3 :${GOTO 165}${execi 4 sensors | grep -A 0 'Core 3' | cut -c15-23}
+
+${GOTO 50}Mém. NVME :${GOTO 170}${execi 4 sensors | grep -A 0 'Composite' | cut -c15-23}
+#${GOTO 50}Carte Wifi :${GOTO 165}${execi 4 sensors | grep -A 0 'temp1' | cut -c15-23}
+
+
+
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Date et heure${font}${color}
+
+${GOTO 50}${time %A} ${time %d} ${time %B} ${time %Y} 
+${GOTO 50}${font Ubuntu:bold:size=12}${time %H:%M}${font}
+
+
+
+
+
+${GOTO 105}${font Ubuntu:bold:size=12}${color0}${exec lsb_release -ds} (${exec lsb_release -cs})${font}${color}

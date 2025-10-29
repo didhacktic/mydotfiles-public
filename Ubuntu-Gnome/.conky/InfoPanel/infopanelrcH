@@ -1,0 +1,67 @@
+conky.config = {
+-- Generated with Conky Wizard
+-- Copyright (C) 2010 JosÃ© David Abad GarcÃ­a
+-- GPL Version 3
+-- 
+-- WARNING! All changes made in this file will be lost if the program runs again!
+
+-- set to yes if you want Conky to be forked in the background
+	background = true,
+
+-- Default Fonts
+	use_xft = true,
+	font = 'Ubuntu:size=10',
+	override_utf8_locale = true,
+
+-- Performance Settings
+	update_interval = 1,
+	total_run_times = 0,
+	double_buffer = true,
+	no_buffers = true,
+	net_avg_samples = 2,
+	text_buffer_size = 1024,
+
+-- Window Settings
+	own_window = true,
+	own_window_transparent = true,
+--own_window_argb_visual yes
+--own_window_argb_value 0
+	own_window_type = 'dock',
+--own_window_type desktop
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+
+-- Window border
+	draw_borders = false,
+	draw_shades = false,
+
+-- Default Color
+	default_color = '#E0DFDE',
+
+-- Color Title.
+	color0 = '#FFFFFF',--blanc
+	color1 = '#6E6D6D',--gris foncé
+	color2 = '#FF0000',--rouge
+	color3 = '#DD3A21',--orange ubuntu
+
+-- Size and position
+	minimum_width = 2560, minimum_height = 350,
+	gap_x = 0,
+	gap_y = -120,
+--gap_y 1210
+	alignment = 'bottom_left',
+
+};
+
+conky.text = [[
+${image ~/.conky/InfoPanel/backgroundH.png -p -1,0 -s 2561x230}
+
+${GOTO 435}${font Ubuntu:bold:size=12}${color0}Disques${font}${color}${GOTO 1155}${font Ubuntu:bold:size=12}${color0}Réseau${font}${color}${GOTO 1515}${font Ubuntu:bold:size=12}${color0}Températures${font}${color}${GOTO 1875}${font Ubuntu:bold:size=12}${color0}Ventilateurs${font}${color}${GOTO 2235}${font Ubuntu:bold:size=12}${color0}Date et heure${font}${color}
+${GOTO 1155}${if_existing /proc/net/route wlp2s0}${font Ubuntu:bold:size=10}${color1}Wifi${font}${color}${else}${if_existing /proc/net/route eth0}${font Ubuntu:bold:size=10}${color1}Ethernet${font}${color}${else}${font Ubuntu:bold:size=10}${color2}Déconnecté${font}${color}${endif}${endif}
+${GOTO 75}Kernel :${GOTO 160}${kernel}${GOTO 435}System (/) :${GOTO 560}${fs_free /}${GOTO 795}Data :${GOTO 880}${fs_free /media/Data}${GOTO 1155}Upspeed :${GOTO 1265}${if_existing /proc/net/route wlp2s0}${upspeedgraph wlp2s0 10,75 B7B2AD B7B2AD}${GOTO 1350}${upspeed wlp2s0}${else}${if_existing /proc/net/route eth0}${upspeedgraph eth0 10,75 B7B2AD B7B2AD}${GOTO 1350}${upspeed eth0}${endif}${endif}${GOTO 1515}CPU :${GOTO 1645}${execi 4 sensors | grep -A 0 'CPU Temperature' | cut -c22-29}${GOTO 1875}CPU FAN :${GOTO 1960}${execi 4 sensors | grep -A 0 'CPU FAN Speed' | cut -c21-29}${GOTO 2235}${time %A} ${time %d} ${time %B} ${time %Y}
+${GOTO 75}CPU :${GOTO 160}${cpubar cpu1 10,75} ${cpu cpu1}%${GOTO 435}${fs_bar 10,100 /}${GOTO 795}${fs_bar 10,100 /media/Data}${GOTO 1155}Downspeed :${GOTO 1265}${if_existing /proc/net/route wlp2s0}${downspeedgraph wlp2s0 10,75 B7B2AD B7B2AD}${GOTO 1350}${downspeed wlp2s0}${else}${if_existing /proc/net/route eth0}${downspeedgraph eth0 10,75 B7B2AD B7B2AD}${GOTO 1350}${downspeed eth0}${endif}${endif}${GOTO 1515}Carte Mère :${GOTO 1645}${execi 4 sensors | grep -A 0 'MB Temperature' | cut -c22-29}${GOTO 1875}FAN 1 :${GOTO 1960}${execi 4 sensors | grep -A 0 'CHASSIS1 FAN Speed' | cut -c21-29}${GOTO 2235}${font Ubuntu:bold:size=11}${time %H:%M}${font}
+${GOTO 75}RAM :${GOTO 160}${membar 10,75} ${memperc}%${GOTO 435}Home (/home) :${GOTO 560}${fs_free /home}${GOTO 795}Photos :${GOTO 880}${fs_free /media/Photos}${GOTO 1155}Uploaded :${GOTO 1265}${if_existing /proc/net/route wlp2s0}${totalup wlp2s0}${else}${if_existing /proc/net/route eth0}${totalup eth0}${endif}${endif}${GOTO 1515}GPU :${GOTO 1645}+${nvidia temp}.0°C${GOTO 1875}FAN 2 :${GOTO 1960}${execi 4 sensors | grep -A 0 'CHASSIS2 FAN Speed' | cut -c21-29}
+${GOTO 75}SWAP :${GOTO 160}${swapbar 10,75}${GOTO 435}${fs_bar 10,100 /home}${GOTO 795}${fs_bar 10,100 /media/Photos}${GOTO 1155}Downloaded :${GOTO 1265}${if_existing /proc/net/route wlp2s0}${totaldown wlp2s0}${else}${if_existing /proc/net/route eth0}${totaldown eth0}${endif}${endif}
+${GOTO 75}Uptime :${GOTO 160}${uptime}${GOTO 795}Musique :${GOTO 880}${fs_free /media/Musique}${GOTO 1155}Local IP :${GOTO 1265}${if_existing /proc/net/route wlp2s0}${addr wlp2s0}${else}${if_existing /proc/net/route eth0}${addr eth0}${endif}${endif}${GOTO 2235}${font Ubuntu:bold:size=12}${color0}${exec lsb_release -d | cut -c21-31}${font}${color}
+${GOTO 795}${fs_bar 10,100 /media/Musique}${GOTO 1155}Public IP :${GOTO 1265}${execi 10000 ~/.conky/InfoPanel/ip.sh}
+]];

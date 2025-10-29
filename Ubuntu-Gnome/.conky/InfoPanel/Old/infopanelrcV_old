@@ -1,0 +1,134 @@
+# Generated with Conky Wizard
+# Copyright (C) 2010 JoséDavid Abad Garcia
+# GPL Version 3
+# 
+# WARNING! All changes made in this file will be lost if the program runs again!
+
+# set to yes if you want Conky to be forked in the background
+background yes
+
+# Default Fonts
+use_xft yes
+xftfont Ubuntu:size=12
+override_utf8_locale yes
+#xftalpha 0.84
+
+
+# Performance Settings
+update_interval 1
+total_run_times 0
+double_buffer yes
+no_buffers yes
+net_avg_samples 2
+text_buffer_size 1024
+
+# Window Settings
+own_window yes
+#own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 100
+own_window_type desktop #dock override normal desktop conky panel
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+
+# Window border
+draw_borders no
+draw_shades no
+draw_graph_borders no
+
+# Default Color
+default_color E0DFDE
+
+# Color Title.
+color0 FFFFFF #blanc
+color1 6E6D6D #gris foncé
+color2 FF0000 #rouge
+color3 DD3A21 #orange ubuntu
+
+# Size and position
+minimum_size 330 1416
+#minimum_size 330 1404
+gap_x -1
+gap_y 28
+#gap_y 36
+
+alignment top_right
+
+TEXT
+#${image ~/.conky/InfoPanel/backgroundV2.png -p 0,-24 -s 330x1440}
+${image ~/.conky/InfoPanel/backgroundV4.png -p -21,0 -s 355x1416}
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Système${font}${color}
+
+${GOTO 50}Kernel :${GOTO 165}${kernel}
+${GOTO 50}CPU :${GOTO 165}${cpubar cpu1 10,75} ${cpu cpu1} %
+${GOTO 50}RAM :${GOTO 165}${membar 10,75} ${memperc} %
+${GOTO 50}SWAP :${GOTO 165}${swapbar 10,75}
+${GOTO 50}Uptime :${GOTO 165}${uptime}
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Réseau${font}${color}
+${GOTO 50}${if_existing /proc/net/route wlp4s0}${font Ubuntu:bold:size=10}${color1}Wifi${font}${color}${else}${if_existing /proc/net/route enp2s0}${font Ubuntu:bold:size=10}${color1}Ethernet1${font}${color}${else}${if_existing /proc/net/route enp4s2}${font Ubuntu:bold:size=10}${color1}Ethernet2${font}${color}${else}${font Ubuntu:bold:size=10}${color2}Déconnecté${font}${color}${endif}${endif}${endif}
+${GOTO 50}Upspeed :${GOTO 165}${if_existing /proc/net/route wlp4s0}${upspeedgraph wlp4s0 10,75 B7B2AD B7B2AD}${GOTO 260}${upspeed wlp4s0}${else}${if_existing /proc/net/route enp2s0}${upspeedgraph enp2s0 10,75 B7B2AD B7B2AD}${GOTO 260}${upspeed enp2s0}${else}${if_existing /proc/net/route enp4s2}${upspeedgraph enp4s2 10,75 B7B2AD B7B2AD}${GOTO 260}${upspeed enp4s2}${endif}${endif}${endif}
+${GOTO 50}Downspeed :${GOTO 165}${if_existing /proc/net/route wlp4s0}${downspeedgraph wlp4s0 10,75 B7B2AD B7B2AD}${GOTO 260}${downspeed wlp4s0}${else}${if_existing /proc/net/route enp2s0}${downspeedgraph enp2s0 10,75 B7B2AD B7B2AD}${GOTO 260}${downspeed enp2s0}${else}${if_existing /proc/net/route enp4s2}${downspeedgraph enp4s2 10,75 B7B2AD B7B2AD}${GOTO 260}${downspeed enp4s2}${endif}${endif}${endif}
+${GOTO 50}Uploaded :${GOTO 165}${if_existing /proc/net/route wlp4s0}${totalup wlp4s0}${else}${if_existing /proc/net/route enp2s0}${totalup enp2s0}${else}${if_existing /proc/net/route enp4s2}${totalup enp4s2}${endif}${endif}${endif}
+${GOTO 50}Downloaded :${GOTO 165}${if_existing /proc/net/route wlp4s0}${totaldown wlp4s0}${else}${if_existing /proc/net/route enp2s0}${totaldown enp2s0}${else}${if_existing /proc/net/route enp4s2}${totaldown enp4s2}${endif}${endif}${endif}
+${GOTO 50}Local IP :${GOTO 165}${if_existing /proc/net/route wlp4s0}${addr wlp4s0}${else}${if_existing /proc/net/route enp2s0}${addr enp2s0}${else}${if_existing /proc/net/route enp4s2}${addr enp4s2}${endif}${endif}${endif}
+${GOTO 50}Public IP :${GOTO 165}${execi 4 ~/.conky/InfoPanel/ip.sh}
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Disques${font}${color}
+
+#${GOTO 50}System (/) :${GOTO 165}${fs_free /}
+${GOTO 50}System :${GOTO 165}${fs_used /} / ${fs_size /}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /}
+${GOTO 50}Home :${GOTO 165}${fs_used /home} / ${fs_size /home}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /home}
+${GOTO 50}Photos1 :${GOTO 165}${fs_used /media/Photos1} / ${fs_size /media/Photos1}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Photos1}
+${GOTO 50}Photos2 :${GOTO 165}${fs_used /media/Photos2} / ${fs_size /media/Photos2}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Photos2}
+#${GOTO 50}Videos1 :${GOTO 165}${fs_used /media/Videos1} / ${fs_size /media/Videos1/}
+#${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Videos1}
+#${GOTO 50}Videos2 :${GOTO 165}${fs_used /media/Videos2} / ${fs_size /media/Videos2/}
+#${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Videos2}
+${GOTO 50}Musique :${GOTO 165}${fs_used /media/Musique} / ${fs_size /media/Musique}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Musique}
+${GOTO 50}Data1 :${GOTO 165}${fs_used /media/Data1} / ${fs_size /media/Data1}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Data1}
+${GOTO 50}Data2 :${GOTO 165}${fs_used /media/Data2} / ${fs_size /media/Data2}
+${GOTO 50}${GOTO 165}${fs_bar 10,100 /media/Data2}
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Températures${font}${color}
+
+${GOTO 50}CPU :${GOTO 165}${execi 4 sensors | grep -A 0 'CPU Temperature' | cut -c22-29}
+${GOTO 50}Carte Mère :${GOTO 165}${execi 4 sensors | grep -A 0 'MB Temperature' | cut -c22-29}
+#${GOTO 50}GPU :${GOTO 165}+${nvidia temp}.0°C
+${GOTO 50}GPU :${GOTO 165}+${execi 4 nvidia-smi -q -d temperature | grep -A 0 'GPU Current Temp' | cut -c45-46}.0°C
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Ventilateurs${font}${color}
+
+${GOTO 50}CPU FAN :${GOTO 165}${execi 4 sensors | grep -A 0 'CPU FAN Speed' | cut -c21-29}
+${GOTO 50}FAN 1 :${GOTO 165}${execi 4 sensors | grep -A 0 'CHASSIS1 FAN Speed' | cut -c21-29}
+${GOTO 50}FAN 2 :${GOTO 165}${execi 4 sensors | grep -A 0 'CHASSIS2 FAN Speed' | cut -c21-29}
+
+
+
+${GOTO 50}${font Ubuntu:bold:size=14}${color0}Date et heure${font}${color}
+
+${GOTO 50}${time %A} ${time %d} ${time %B} ${time %Y}
+${GOTO 50}${font Ubuntu:bold:size=12}${time %H:%M}${font}
+
+
+
+
+
+
+
+${GOTO 110}${font Ubuntu:bold:size=12}${color0}${exec lsb_release -ds} (${exec lsb_release -cs})${font}${color}
