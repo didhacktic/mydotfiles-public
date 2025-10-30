@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Client PRONOTE
+Comment=PlayOnLinux
+Type=Application
+Exec=/usr/share/playonlinux/playonlinux --run "Client PRONOTE" %F
+Icon=/home/did/.PlayOnLinux//icones/full_size/Client PRONOTE
+Name[fr_FR]=Client PRONOTE
+StartupWMClass=Client PRONOTE.exe
+Categories=

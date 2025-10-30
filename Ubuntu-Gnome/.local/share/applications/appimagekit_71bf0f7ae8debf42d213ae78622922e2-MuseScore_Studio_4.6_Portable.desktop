@@ -1,0 +1,70 @@
+[Desktop Entry]
+# Write keys in the order specified in https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
+# After editing, run this command to check for errors: $ desktop-file-validate [filename]
+Type=Application
+# Version of Desktop Entry Spec, not MuseScore version. Don't upgrade prematurely.
+Version=1.0
+Name=MuseScore Studio 4.6 Portable (1)
+GenericName=Music notation
+GenericName[de]=Notensatz
+GenericName[fr]=Notation musicale
+Comment=Create, play and print beautiful sheet music
+Comment[ru]=Визуальный редактор нотных партитур
+Comment[fr]=Gravure de partitions musicales
+Icon=musescore.png
+Exec=/home/did/.local/bin/MuseScore-Studio-4.6.3.252940956-x86_64_753ae3f0207a78f54366e223056302b1.AppImage %U
+Terminal=false
+MimeType=application/x-musescore;application/x-musescore+xml;x-scheme-handler/musescore;application/vnd.recordare.musicxml;application/vnd.recordare.musicxml+xml;application/x-mei+xml;audio/midi;application/x-bww;application/x-biab;application/x-capella;audio/x-gtp;application/x-musedata;application/x-overture;audio/x-ptb;application/x-tef;application/x-sf2;application/x-sf3;
+Categories=AudioVideo;Audio;Graphics;2DGraphics;VectorGraphics;RasterGraphics;Publishing;Midi;Mixer;Sequencer;Music;Qt;
+Keywords=music;notation;composition;composing;arranging;making;sheet music;music notation software;lead sheet;leadsheet;score;full score;scorewriter;MIDI;musicxml;playback;instrument;
+Keywords[de]=Musik;Noten;Musiknoten;Komposition;Komponieren;Arrangieren;Notenblatt;Notenblätter;Notationsprogramm;Musiknotationsprogramm;Musiknotation;Tabulatur;MIDI;musicxml;Instrument;
+StartupNotify=true
+StartupWMClass=MuseScore4
+
+TryExec=/home/did/.local/bin/MuseScore-Studio-4.6.3.252940956-x86_64_753ae3f0207a78f54366e223056302b1.AppImage
+X-AppImage-Old-Icon=mscore4portable
+X-AppImage-Identifier=71bf0f7ae8debf42d213ae78622922e2
+Actions=AppImageLauncher-Remove-AppImage;AppImageLauncher-Update-AppImage;
+X-AppImageLauncher-Version=3.0.0-beta-2 (git commit 96cb937), built on 2025-10-28 22:31:15 UTC
+
+[Desktop Action AppImageLauncher-Remove-AppImage]
+Name=Delete this AppImage
+Icon=AppImageLauncher
+Exec=/opt/appimagelauncher.AppDir/usr/lib/x86_64-linux-gnu/appimagelauncher/remove "/home/did/.local/bin/MuseScore-Studio-4.6.3.252940956-x86_64_753ae3f0207a78f54366e223056302b1.AppImage"
+Name[ast]=Desaniciar AppImage del sistema
+Name[cs]=Odebrat AppImage ze systému
+Name[de]=Dieses AppImage löschen
+Name[en]=Delete this AppImage
+Name[es]=Eliminar Appimage del Sistema
+Name[fr]=Supprimer cette AppImage
+Name[it]=Rimuovi questa AppImage
+Name[ko]=이 AppImage 삭제
+Name[nb_NO]=Slett AppImage
+Name[nl]=AppImage deïnstalleren
+Name[pl]=Usuń AppImage z systemu
+Name[pt]=Remover AppImage do sistema
+Name[pt_BR]=Remover AppImage do sistema
+Name[ru]=Удалить AppImage
+Name[tr]=Bu AppImage uygulamasını sil
+Name[zh_Hans]=删除此 AppImage
+
+[Desktop Action AppImageLauncher-Update-AppImage]
+Name=Update this AppImage
+Icon=AppImageLauncher
+Exec=/opt/appimagelauncher.AppDir/usr/lib/x86_64-linux-gnu/appimagelauncher/update "/home/did/.local/bin/MuseScore-Studio-4.6.3.252940956-x86_64_753ae3f0207a78f54366e223056302b1.AppImage"
+Name[ast]=Anovar AppImage
+Name[cs]=Aktualizovat AppImage
+Name[de]=Dieses AppImage aktualisieren
+Name[en]=Update this AppImage
+Name[es]=Actualizar Appimage
+Name[fr]=Mettre à jour l'AppImage
+Name[it]=Aggiorna questa AppImage
+Name[ko]=이 AppImage 업데이트
+Name[nb_NO]=Oppdater AppImage
+Name[nl]=AppImage bijwerken
+Name[pl]=Uaktualnij AppImage
+Name[pt]=Atualizar AppImage
+Name[pt_BR]=Atualizar AppImage
+Name[ru]=Обновить AppImage
+Name[tr]=Bu AppImage uygulamasını güncelle
+Name[zh_Hans]=更新此 AppImage

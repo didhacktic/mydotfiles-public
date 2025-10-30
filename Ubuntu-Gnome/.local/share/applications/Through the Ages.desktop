@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Through the Ages
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/758370
+Icon=steam_icon_758370
+Terminal=false
+Type=Application
+Categories=Game;

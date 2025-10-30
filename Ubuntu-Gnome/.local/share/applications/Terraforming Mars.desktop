@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Terraforming Mars
+Comment=Play this game on Steam
+#Exec=steam steam://rungameid/800270
+Exec=env STEAM_DISABLE_X11=1 QT_QPA_PLATFORM=wayland QT_QPA_PLATFORMTHEME=gnome SDL_VIDEODRIVER=wayland steam steam://rungameid/800270
+Icon=steam_icon_800270
+Terminal=false
+Type=Application
+Categories=Game;

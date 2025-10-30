@@ -1,0 +1,38 @@
+[Desktop Entry]
+Type=Application
+Name=Densify (1bcdf10) (1)
+GenericName=PDF Compressor
+Comment=GUI Wrapper for Compressing PDFs with GhostScript
+Icon=densify.png
+Exec=/home/did/.local/bin/Densify-v0.3.1-x86_64_7312dcf606095d841969750906d5da8a.AppImage
+Terminal=false
+Categories=Utility;
+X-AppImage-Version=1bcdf10
+
+TryExec=/home/did/.local/bin/Densify-v0.3.1-x86_64_7312dcf606095d841969750906d5da8a.AppImage
+X-AppImage-Old-Icon=desktop-icon
+X-AppImage-Old-Name=Densify
+X-AppImage-Identifier=22bc1f509f561dbe64c33f457524e43f
+Actions=AppImageLauncher-Remove-AppImage;
+X-AppImageLauncher-Version=3.0.0-beta-2 (git commit 96cb937), built on 2025-10-28 22:31:15 UTC
+
+[Desktop Action AppImageLauncher-Remove-AppImage]
+Name=Delete this AppImage
+Icon=AppImageLauncher
+Exec=/opt/appimagelauncher.AppDir/usr/lib/x86_64-linux-gnu/appimagelauncher/remove "/home/did/.local/bin/Densify-v0.3.1-x86_64_7312dcf606095d841969750906d5da8a.AppImage"
+Name[ast]=Desaniciar AppImage del sistema
+Name[cs]=Odebrat AppImage ze systému
+Name[de]=Dieses AppImage löschen
+Name[en]=Delete this AppImage
+Name[es]=Eliminar Appimage del Sistema
+Name[fr]=Supprimer cette AppImage
+Name[it]=Rimuovi questa AppImage
+Name[ko]=이 AppImage 삭제
+Name[nb_NO]=Slett AppImage
+Name[nl]=AppImage deïnstalleren
+Name[pl]=Usuń AppImage z systemu
+Name[pt]=Remover AppImage do sistema
+Name[pt_BR]=Remover AppImage do sistema
+Name[ru]=Удалить AppImage
+Name[tr]=Bu AppImage uygulamasını sil
+Name[zh_Hans]=删除此 AppImage

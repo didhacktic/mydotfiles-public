@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Client EDT
+Comment=PlayOnLinux
+Type=Application
+Exec=/usr/share/playonlinux/playonlinux --run "Client EDT" %F
+Icon=/home/did/.PlayOnLinux//icones/full_size/Client EDT
+Name[fr_FR]=Client EDT
+StartupWMClass=Client EDT.exe
+Categories=

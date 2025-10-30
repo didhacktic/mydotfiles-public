@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Root
+Comment=Play this game on Steam
+#Exec=steam steam://rungameid/965580
+Exec=env STEAM_DISABLE_X11=1 QT_QPA_PLATFORM=wayland QT_QPA_PLATFORMTHEME=gnome SDL_VIDEODRIVER=wayland steam steam://rungameid/965580
+Icon=steam_icon_965580
+Terminal=false
+Type=Application
+Categories=Game;
