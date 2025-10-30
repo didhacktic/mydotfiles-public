@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# stow-link-both.sh — Liaison fichier-par-fichier public+private
-# Usage: ./stow-link-both.sh [--dry-run] [--force] [--filter <mot>]
+# linkfiles — Liaison fichier-par-fichier public+private (sans symlink de dossier)
+# Usage: linkfiles [--dry-run] [--force] [--filter <mot>]
+
 set -euo pipefail
 
 PUBLIC_BASE="$HOME/didhacktic/mydotfiles-public/Arch-Hyprland"
@@ -21,7 +22,7 @@ while [[ $# -gt 0 ]]; do
       cat <<EOF
 Usage: $0 [--dry-run] [--force] [--filter <mot>]
 
-Options:
+Opitions:
   --dry-run      Simule les actions (ne crée aucun lien)
   --force        Si la cible existe, la sauvegarde en .bak avant remplacement
   --filter <mot> Ne traiter que les fichiers dont le chemin relatif contient <mot>
@@ -34,9 +35,15 @@ done
 
 log() { printf '%s\n' "$*"; }
 
-# fonction qui crée un lien pour un fichier source donné
+# Crée un lien symbolique pour un fichier donné (jamais un dossier)
 link_file() {
   local src="$1" dest="$2"
+
+  # sécurité : ne jamais créer de lien vers un dossier
+  if [ -d "$src" ]; then
+    log "   🚫 Ignoré (dossier): $src"
+    return
+  fi
 
   if [ -e "$dest" ] || [ -L "$dest" ]; then
     # existe déjà : si c'est déjà le bon lien, on skip
@@ -45,8 +52,13 @@ link_file() {
       return
     fi
 
+    # ne jamais remplacer un dossier par un lien symbolique
+    if [ -d "$dest" ] && [ ! -L "$dest" ]; then
+      log "   ⚠️  Cible est un dossier réel — ignoré : $dest"
+      return
+    fi
+
     if [ "$FORCE" = true ]; then
-      # sauvegarde
       local bak="${dest}.bak.$(date +%s)"
       if [ "$DRY_RUN" = true ]; then
         log "   🧪 Simulation : mv \"$dest\" \"$bak\""
@@ -61,7 +73,7 @@ link_file() {
     fi
   fi
 
-  # crée dossier parent et le lien
+  # crée le dossier parent et le lien symbolique
   if [ "$DRY_RUN" = true ]; then
     log "   🧪 Simulation : mkdir -p \"$(dirname "$dest")\""
     log "   🧪 Simulation : ln -s \"$src\" \"$dest\""
@@ -72,26 +84,21 @@ link_file() {
   fi
 }
 
-# fonction pour traiter une base (public/private)
+# Parcours récursif d'une base
 process_base() {
-  local base="$1"
-  local label="$2"
+  local base="$1" label="$2"
   if [ ! -d "$base" ]; then
     log "ℹ️  [$label] non trouvé : $base — saut."
     return
   fi
 
   log "🔍 [$label] Parcours de : $base"
-  # trouver tous les fichiers, trier pour stabilité
   while IFS= read -r -d $'\0' file; do
-    # chemin relatif
     rel="${file#$base/}"
-    # filtre optionnel
     if [ -n "$FILTER" ] && [[ "$rel" != *"$FILTER"* ]]; then
       continue
     fi
     dest="$TARGET_DIR/$rel"
-
     log "-> [$label] $rel"
     link_file "$file" "$dest"
   done < <(find "$base" -type f -print0 | sort -z)
