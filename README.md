@@ -1,2 +1,4 @@
 # mydotfiles-public
-My public configuration files
+Mes fichiers de configuration publics
+
+
