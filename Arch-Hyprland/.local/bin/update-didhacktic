@@ -1,0 +1,43 @@
+#!/bin/bash
+# --------------------------------------------------
+# Script : update_repos.sh
+# Auteur : didhacktic
+# Description : Commit + Pull + Push automatiques
+# pour les dépôts GitHub dans ~/didhacktic
+# --------------------------------------------------
+
+# Liste des dépôts à mettre à jour
+REPOS=(
+  "mydotfiles-public"
+  "mydotfiles-private"
+)
+
+# Répertoire de base
+BASE_DIR="$HOME/didhacktic"
+
+# Parcours de chaque dépôt
+for repo in "${REPOS[@]}"; do
+    echo "-------------------------------------------"
+    echo "📁 Dépôt : $repo"
+    cd "$BASE_DIR/$repo" || { echo "⚠️  Impossible d'accéder à $repo"; continue; }
+
+    # Synchronise avec GitHub (récupère les nouvelles versions)
+    git pull --rebase
+
+    # Vérifie s’il y a des changements locaux
+    if [[ -n $(git status --porcelain) ]]; then
+        echo "📝 Changements détectés, création du commit..."
+        git add .
+        git commit -m "Auto-update: $(date '+%Y-%m-%d %H:%M:%S')"
+        git push
+        echo "✅ Changements envoyés sur GitHub."
+    else
+        echo "✅ Aucun changement local, rien à faire."
+    fi
+
+    echo "-------------------------------------------"
+    echo
+done
+
+echo "🎉 Tous les dépôts sont à jour !"
+

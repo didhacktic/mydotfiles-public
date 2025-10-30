@@ -1,0 +1,53 @@
+# --- Clés, certificats, secrets ---
+*.key
+*.pem
+*.p12
+*.pfx
+*.gpg
+*.asc
+*.crt
+.env
+.env.*
+secrets*
+credentials*
+passwords*
+tokens*
+apikey*
+private_*
+
+# --- Dossiers sensibles ---
+.ssh/
+.gnupg/
+.cache/
+.local/share/keyrings/
+.vscode-server/
+tmp/
+backup/
+logs/
+
+# --- Éditeurs & IDE ---
+*.swp
+*.swo
+*.bak
+*.old
+*.tmp
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Langages & build ---
+node_modules/
+dist/
+build/
+*.log
+*.out
+
+# --- Archives & gros fichiers ---
+*.iso
+*.tar
+*.tar.gz
+*.zip
+*.7z
