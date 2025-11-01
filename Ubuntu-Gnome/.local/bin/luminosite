@@ -1,0 +1,70 @@
+#!/bin/bash
+# OSD de luminosité compatible Wayland pour écran externe (via ddcutil)
+
+BUS=14           # adapte si ton écran est sur un autre bus
+STEP=10
+ICON="/usr/share/icons/Yaru/scalable/status/display-brightness-symbolic.svg"
+
+# Vérifie ddcutil
+if ! command -v ddcutil >/dev/null; then
+    notify-send "Erreur" "ddcutil n’est pas installé"
+    exit 1
+fi
+
+# Récupère la luminosité actuelle
+CURR=$(ddcutil --bus=$BUS getvcp 10 2>/dev/null | grep -oP 'current value = \K[0-9]+')
+MAX=$(ddcutil --bus=$BUS getvcp 10 2>/dev/null | grep -oP 'max value = \K[0-9]+')
+
+if [ -z "$CURR" ] || [ -z "$MAX" ]; then
+    notify-send "Erreur" "Impossible de lire la luminosité (écran non détecté)"
+    exit 1
+fi
+
+PERCENT=$(( CURR * 100 / MAX ))
+
+case "$1" in
+    up)
+        NEW=$(( PERCENT + STEP ))
+        ;;
+    down)
+        NEW=$(( PERCENT - STEP ))
+        ;;
+    *)
+        echo "Usage: $0 {up|down}"
+        exit 1
+        ;;
+esac
+
+# Bornes
+(( NEW < 0 )) && NEW=0
+(( NEW > 100 )) && NEW=100
+
+# Applique la nouvelle valeur
+ddcutil --bus=$BUS setvcp 10 "$NEW" >/dev/null 2>&1
+
+# Ferme toute OSD précédente
+pkill -f "yad --name=brightness_osd" 2>/dev/null
+
+# Affiche un OSD sombre arrondi
+yad --name=brightness_osd \
+    --undecorated \
+    --skip-taskbar \
+    --on-top \
+    --no-buttons \
+    --geometry=300x60-20-80 \
+    --borders=20 \
+    --timeout=1.2 \
+    --center \
+    --title="Luminosité" \
+    --image="$ICON" \
+    --text="<b>🔆 ${NEW}%</b>" \
+    --progress --percentage="$NEW" \
+    --enable-log \
+    --no-focus \
+    --window-icon="$ICON" \
+    --fixed \
+    --close-on-unfocus \
+    --class="osd-brightness" \
+    --align=center \
+    --sticky \
+    --fg="#ffffff" --bg="#202020" &
