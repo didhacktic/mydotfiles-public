@@ -6,25 +6,21 @@
 # pour les dépôts GitHub dans ~/didhacktic
 # Compatible sparse-checkout et SSH
 # --------------------------------------------------
-
 # Liste des dépôts à mettre à jour
 REPOS=(
   "mydotfiles-public"
   "mydotfiles-private"
+  "Dyspositif"
 )
-
 # Répertoire de base
 BASE_DIR="$HOME/didhacktic"
-
 # Date du commit
 DATE=$(date '+%Y-%m-%d %H:%M:%S')
-
 # Boucle principale
 for repo in "${REPOS[@]}"; do
     echo "-------------------------------------------"
-    echo "📁 Dépôt : $repo"
-    cd "$BASE_DIR/$repo" || { echo "⚠️  Impossible d'accéder à $repo"; continue; }
-
+    echo "Dépôt : $repo"
+    cd "$BASE_DIR/$repo" || { echo "Impossible d'accéder à $repo"; continue; }
     # Si sparse-checkout actif, on s'assure que le dossier principal est bien inclus
     if git config --worktree --get core.sparseCheckoutCone &>/dev/null; then
         MAIN_DIR=$(git sparse-checkout list | head -n 1)
@@ -32,26 +28,21 @@ for repo in "${REPOS[@]}"; do
             git sparse-checkout set "$MAIN_DIR" >/dev/null 2>&1
         fi
     fi
-
     # Synchronisation avec GitHub
-    echo "🔄 Synchronisation avec GitHub..."
+    echo "Synchronisation avec GitHub..."
     git pull --rebase --autostash
-
     # Ajoute tous les changements (nouveaux fichiers inclus)
     git add -A
-
     # Vérifie s'il y a quelque chose à commit
     if ! git diff --cached --quiet; then
-        echo "📝 Changements détectés, création du commit..."
+        echo "Changements détectés, création du commit..."
         git commit -m "Auto-update: ${DATE}"
-        git push
-        echo "✅ Changements envoyés sur GitHub."
+        git push || echo "Échec du push sur $repo"
+        echo "Changements envoyés sur GitHub."
     else
-        echo "✅ Aucun changement local à valider."
+        echo "Aucun changement local à valider."
     fi
-
     echo "-------------------------------------------"
     echo
 done
-
-echo "🎉 Tous les dépôts sont à jour !"
+echo "Tous les dépôts sont à jour !"

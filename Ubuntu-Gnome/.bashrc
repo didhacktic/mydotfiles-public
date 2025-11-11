@@ -139,3 +139,5 @@ if ! [ -z "$BASH_VERSION" -o -z "$PS1" -o -n "$last_command_started_cache" ]; th
   . /usr/share/undistract-me/long-running.bash
   notify_when_long_running_commands_finish_install
 fi
+alias dys='/home/did/dyslexie_pro/venv/bin/python /home/did/dyslexie_pro/dyslexie_pro.py'
+alias pdf='/home/did/pdf_to_docx/venv/bin/python /home/did/pdf_to_docx/pdf_converter_gui.py'
