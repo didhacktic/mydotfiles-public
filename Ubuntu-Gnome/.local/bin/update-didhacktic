@@ -36,7 +36,7 @@ for repo in "${REPOS[@]}"; do
     # Vérifie s'il y a quelque chose à commit
     if ! git diff --cached --quiet; then
         echo "Changements détectés, création du commit..."
-        git commit -m "Auto-update: ${DATE}"
+        git commit -m "Mise à jour du ${DATE}"
         git push || echo "Échec du push sur $repo"
         echo "Changements envoyés sur GitHub."
     else
