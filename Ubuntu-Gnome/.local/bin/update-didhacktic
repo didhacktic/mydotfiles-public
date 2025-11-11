@@ -10,7 +10,7 @@
 REPOS=(
   "mydotfiles-public"
   "mydotfiles-private"
-  "Dyspositif"
+  "DysPositif"
 )
 # Répertoire de base
 BASE_DIR="$HOME/didhacktic"
